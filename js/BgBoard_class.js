@@ -14,6 +14,7 @@ class BgBoard {
     this.param5 = this.param0 * 2 + 2; //half area points with bar and offtray
     this.param6 = this.param0 * 2 + 1; //offtray area
     this.param7 = this.param0 * 4 + 4; //stackinfo
+    this.dicemx = gameparam[2]; //dice pip max
 
     this.xgidstr = "XGID=" + "-".repeat(this.param2) + ":0:0:0:00:0:0:0:0:0";
     this.topbottomFlag = true; //true: player2 is bottom, player1 is top
@@ -75,6 +76,17 @@ class BgBoard {
     this.svgDice[7] += '<circle cx="140" cy="90" r="8" stroke-width="18"/>';
     this.svgDice[7] += '<circle cx="115" cy="132" r="8" stroke-width="18"/>';
     this.svgDice[7] += '</svg>';
+    this.svgDice[8]  = '<svg class="dice-six" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">';
+    this.svgDice[8] += '<rect x="7" y="7" rx="30" width="166" height="166" stroke-width="1"/>';
+    this.svgDice[8] += '<circle cx="48" cy="48" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="48" cy="132" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="132" cy="48" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="132" cy="132" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="90" cy="60" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="60" cy="90" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="120" cy="90" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '<circle cx="90" cy="120" r="8" stroke-width="18"/>';
+    this.svgDice[8] += '</svg>';
   }
 
   setDomNameAndStyle() {

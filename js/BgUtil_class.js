@@ -116,11 +116,12 @@ class BgUtil {
 
   static getGametypeParam(gametype) {
     switch(gametype) {
-      case "half" : return  [3,  8]; //point num of quarter area, chequer num
-      case "micro": return  [4, 10];
-      case "short": return  [5, 13];
-      case "long" : return  [7, 18];
-      default     : return  [6, 15];
+      case "half" : return  [3,  8, 3]; //point num of quarter area, chequer num, dice pip max
+      case "micro": return  [4, 10, 4];
+      case "short": return  [5, 13, 5];
+      case "long" : return  [7, 18, 7];
+      case "sugo8": return  [6, 15, 8];
+      default     : return  [6, 15, 6];
     }
   }
 

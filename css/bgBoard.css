@@ -345,30 +345,32 @@
   --dicepip1:#000;
   --dicepip2:#000;
 }
-.halfgammon{
+.sugo8gammon{
   /* App depend constants */
-  --boardWidthNum: 84;
+  --boardWidthNum: 84.3;
   --pointWidthNum: 6;
-  --cubeSizeNum: 5.7;
+  --cubeSizeNum: 5.5;
   /* color */
-  /* ChrisBray */
-  --board-color:#f6dd92;
-  --board-frame:#b55100;
-  --triangle-odd:#ffffff;
-  --triangle-evn:#df8000;
-  --offtray-color:#c58936;
-  --bar-color:#bf5f04;
-  --label-color:#dddddd;
-  --cube-base:#ffffff;
-  --cube-text:#ff0000;
-  --cube-offer-bg:#ffff00;
-  --cube-offer-fg:#0000ff;
-  --stack1:#ffffff;
-  --stack2:#000000;
-  --chequer1:#e71f00;
-  --chequer2:#ffffff;
-  --diceface1:#e71f00;
-  --diceface2:#ffffff;
-  --dicepip1:#ffffff;
-  --dicepip2:#000000;
+  --board-color:#bfe;
+  --board-frame:#220;
+  --triangle-odd:#510;
+  --triangle-evn:#015;
+  --offtray-color:#bfe;
+  --bar-color:#905;
+  --label-color:#fff;
+  --cube-base:#ecc;
+  --cube-text:#222;
+  --cube-offer-bg:#08f;
+  --cube-offer-fg:#f80;
+  --stack1:#000;
+  --stack2:#000;
+  --chequer1:#df0;
+  --chequer2:#f0d;
+  --diceface1:#df0;
+  --diceface2:#f0d;
+  --dicepip1:#000;
+  --dicepip2:#000;
+}
+.halfgammon{
+  /* undefined */
 }

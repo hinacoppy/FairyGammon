@@ -10,6 +10,7 @@ class BgGame {
     this.param1 = this.param0 * 4 + 1; //array param of XGID position
     this.param2 = this.param0 * 4 + 2; //boff1
     this.param3 = this.param0 * 4 + 3; //boff2
+    this.dicemx = gameparam[2]; //dice pip max
 
     this.player = false; //true=player1, false=player2
     this.gamescore = [];
@@ -285,7 +286,7 @@ class BgGame {
   }
 
   randomdice(openroll = false) {
-    const random = (() => Math.floor( Math.random() * this.param0 ) + 1);
+    const random = (() => Math.floor( Math.random() * this.dicemx ) + 1);
     const d1 = random();
     let   d2 = random();
     if (openroll) { //オープニングロールでは同じ目を出さない

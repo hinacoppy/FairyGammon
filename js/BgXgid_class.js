@@ -13,6 +13,7 @@ class Xgid {
     this.param3 = this.param0 + 1;     //my bar point
     this.param4 = this.param0 * 3;     //oppo bar point
     this.param5 = this.param0 * 3 + 1; //oppo inner point
+    this.dicemx = gameparam[2]; //dice pip max
 
     this._xgid = xgid ? xgid : "XGID=" + "-".repeat(this.param2) + ":0:0:0:00:0:0:0:0:0";
     this._position = "-".repeat(this.param2);
@@ -269,8 +270,8 @@ class Xgid {
   }
 
   isValid() {
-    if (this._dice_ary[1] > this.param0 || this._dice_ary[1] < 0) { return false; }
-    if (this._dice_ary[2] > this.param0 || this._dice_ary[2] < 0) { return false; }
+    if (this._dice_ary[1] > this.dicemx || this._dice_ary[1] < 0) { return false; }
+    if (this._dice_ary[2] > this.dicemx || this._dice_ary[2] < 0) { return false; }
     if (this._boff[0] < 0 || this._boff[1] < 0) { return false; }
     return true;
   }
@@ -492,7 +493,7 @@ class Xgid {
     if (this.get_ptno(bar) == 0) { return false; } //オンザバーでなければfalse
 
     const offset = (turn == 1) ? 1 : this.param5;
-    for (let p = 0; p < this.param0; p++) {
+    for (let p = 0; p < this.dicemx; p++) {
       const q = p + offset;
       if (!(this.get_ptno(q) >= 2 && this.get_ptcol(q) == turn)) {
         return false; //インナーボードに隙間があればfalse
