@@ -114,6 +114,10 @@ class BgUtil {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 
+  static getLeftTopHash(x, y) {
+    return {left:x, top:y};
+  }
+
   static getGametypeParam(gametype) {
     switch(gametype) {
       case "half" : return  [3,  8, 3]; //point num of quarter area, chequer num, dice pip max
