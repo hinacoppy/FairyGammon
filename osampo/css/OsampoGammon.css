@@ -135,7 +135,7 @@ body{
 }
 .player2chequer{
   color:#ccf;
-  transform:rotateY(0deg);
+  transform:rotateX(180deg);
 }
 
 /* Point Flashing ------------------------------------- */
