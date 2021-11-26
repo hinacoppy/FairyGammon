@@ -86,7 +86,7 @@ class BgGame {
   async rollAction(openroll = false) {
     this.hideAllPanel();
     this.undoStack = [];
-    const dice = this.randomdice(openroll);
+    const dice = BgUtil.randomdice(this.dicemx, openroll);
     this.xgid.dice = dice[2];
     this.xgid.usabledice = true;
     this.board.showBoard2(this.xgid);
@@ -160,19 +160,6 @@ class BgGame {
 
   nextGameAction() {
     this.beginNewGame();
-  }
-
-  randomdice(openroll = false) {
-    const random = (() => Math.floor( Math.random() * this.dicemx ) + 1);
-    const d1 = random();
-    let   d2 = random();
-    if (openroll) { //オープニングロールでは同じ目を出さない
-      while (d1 == d2) {
-        d2 = random();
-      }
-    }
-    const dicestr = String(d1) + String(d2);
-    return [d1, d2, dicestr];
   }
 
   showRollPanel(player) {

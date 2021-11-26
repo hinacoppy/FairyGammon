@@ -114,6 +114,19 @@ class BgUtil {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 
+  static randomdice(dicemax = 6, openroll = false) {
+    const random = (() => Math.floor( Math.random() * dicemax ) + 1);
+    const d1 = random();
+    let   d2 = random();
+    if (openroll) { //オープニングロールでは同じ目を出さない
+      while (d1 == d2) {
+        d2 = random();
+      }
+    }
+    const dicestr = String(d1) + String(d2);
+    return [d1, d2, dicestr];
+  }
+
   static getLeftTopHash(x, y) {
     return {left:x, top:y};
   }

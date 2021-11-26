@@ -30,7 +30,6 @@ class BgGame {
     this.setEventHandler();
     this.setChequerDraggable();
     this.showpipflg = true;
-    this.useclockflg = false;
     this.flashflg = true;
     this.jacobyflg = true;
     this.outerDragFlag = false; //駒でない部分をタップしてドラッグを始めたら true
@@ -75,7 +74,6 @@ class BgGame {
     //settings and valiables
     this.settings    = $("#settings");
     this.showpipflg  = $("[name=showpip]").prop("checked");
-    this.useclockflg = $("[name=useclock]").prop("checked");
     this.flashflg    = $("[name=flashdest]").prop("checked"); //ドラッグ開始時に移動可能なポイントを光らせる
     this.jacobyflg   = $("[name=jacoby]").prop("checked");
     this.matchlen    = $("#matchlen");
@@ -103,17 +101,13 @@ class BgGame {
     this.newgamebtn.    on(clickEventType, (e) => { e.preventDefault(); this.newGameAction(); });
     this.cancelbtn.     on(clickEventType, (e) => { e.preventDefault(); this.cancelSettingPanelAction(); });
     this.pointTriangle. on('touchstart mousedown', (e) => { e.preventDefault(); this.pointTouchStartAction(e); });
-    $(window).          on('resize',       (e) => { e.preventDefault(); this.board.redraw(); }); 
+    $(window).          on('resize',       (e) => { e.preventDefault(); this.redrawAction(); }); 
   }
 
   initGameOption() {
-    this.useclockflg = $("[name=useclock]") .prop("checked");
     this.showpipflg  = $("[name=showpip]")  .prop("checked");
     this.flashflg    = $("[name=flashdest]").prop("checked");
     this.jacobyflg   = $("[name=jacoby]")   .prop("checked");
-
-    $(".clock").toggle(this.useclockflg);
-    $(".pip").toggle(this.showpipflg && !this.useclockflg); //クロックモードのときはピップ表示しない
 
     this.matchLength = this.matchlen.val();
     const matchinfotxt = (this.matchLength == 0) ? "$" : this.matchLength;
@@ -148,7 +142,7 @@ class BgGame {
   async rollAction(openroll = false) {
     this.hideAllPanel();
     this.undoStack = [];
-    const dice = this.randomdice(openroll);
+    const dice = BgUtil.randomdice(this.dicemx, openroll);
     this.xgid.dice = dice[2];
     this.xgid.usabledice = true;
     this.board.showBoard2(this.xgid);
@@ -283,19 +277,6 @@ class BgGame {
   passAction() {
     this.xgid.dice = "66";
     this.doneAction();
-  }
-
-  randomdice(openroll = false) {
-    const random = (() => Math.floor( Math.random() * this.dicemx ) + 1);
-    const d1 = random();
-    let   d2 = random();
-    if (openroll) { //オープニングロールでは同じ目を出さない
-      while (d1 == d2) {
-        d2 = random();
-      }
-    }
-    const dicestr = String(d1) + String(d2);
-    return [d1, d2, dicestr];
   }
 
   showPipInfo() {
@@ -683,6 +664,16 @@ class BgGame {
     $("#matchlen") .val(this.settingVars.matchlen);
     $("#showpip")  .prop("checked", this.settingVars.showpip);
     $("#flashdest").prop("checked", this.settingVars.flashdest);
+  }
+
+  redrawAction() {
+    this.board.redraw();
+
+    this.allpanel.each((index, elem) => {
+      if ($(elem).css("display") != "none") {
+        //this.showElement($(elem), 'S', this.player); //panelは中央表示
+      }
+    });
   }
 
 } //end of class BgGame

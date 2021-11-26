@@ -17,7 +17,6 @@ class BgBoard {
     this.dicemx = gameparam[2]; //dice pip max
 
     this.xgidstr = "XGID=" + "-".repeat(this.param2) + ":0:0:0:00:0:0:0:0:0";
-    this.topbottomFlag = true; //true: player2 is bottom, player1 is top
     this.mainBoard = $('#board'); //need to define before bgBoardConfig()
     this.bgBoardConfig();
     this.prepareSvgDice();
@@ -163,11 +162,8 @@ class BgBoard {
 
   showBoard2(xg) { // input for XGID object
     this.xgidstr = xg.xgidstr;
-    if (xg.get_boff(0) < 0 || xg.get_boff(1) < 0) {
-      alert("Invalid XGID!!\n" + xg.xgidstr + "\nbearoff(0)=" + xg.get_boff(0) + "\nbearoff(1)=" + xg.get_boff(1));
-    }
     this.showPosition(xg);
-    this.showDiceAll(xg.get_turn(), xg.get_dice(1), xg.get_dice(2));
+    this.showDiceAll(xg);
     this.showCube(xg);
   }
 
@@ -180,17 +176,18 @@ class BgBoard {
     const cubeval = BgUtil.calcCubeDisp(val, crawford);
     const cubePosClass = ["cubepos0", "cubepos1", "cubepos2"];
     const cubePosJoin = cubePosClass.join(" ");
-    const which = (this.topbottomFlag) ? cubepos : BgUtil.getBdOppo(cubepos);
-    this.cube.text(cubeval).css(this.getPosObj(this.cubeX, this.cubeY[which]))
+    this.cube.text(cubeval).css(this.getPosObj(this.cubeX, this.cubeY[cubepos]))
              .removeClass(cubePosJoin).addClass(cubePosClass[cubepos])
              .toggleClass("cubeoffer", offer);
   }
 
-  showDiceAll(turn, d1, d2) {
-    switch( BgUtil.cvtTurnXg2Bd(turn) ) {
+  showDiceAll(xg) {
+    const d1 = xg.get_dice(1);
+    const d2 = xg.get_dice(2);
+    switch( BgUtil.cvtTurnXg2Bd( xg.get_turn() ) ) {
     case 0:
       this.showDice(1, d1, 0);
-      this.showDice(2, d2, 0);
+      this.showDice(2, 0, d2);
       break;
     case 1:
       this.showDice(1, d1, d2);
@@ -243,8 +240,8 @@ class BgBoard {
       for (let i = 0; i < this.ckrnum; i++) {
         const pt = this.chequer[player][i].point;
         const st = this.chequer[player][i].stack;
-        const which = (this.topbottomFlag) ? player : BgUtil.getBdOppo(player);
-        const which2 = (pt > this.param4 && this.topbottomFlag) || (pt <= this.param4 && !this.topbottomFlag);
+        const which = player;
+        const which2 = (pt > this.param4);
         bf = false;
 
         if (pt == this.param2 || pt == this.param3) { //bear off
@@ -274,7 +271,6 @@ class BgBoard {
         this.showStackInfo(sf, pt, st, position, player);
       }
     }
-
   }
 
   showStackInfo(stackflag, pt, num, position, player) {
