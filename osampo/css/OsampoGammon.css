@@ -142,3 +142,42 @@ body{
 .flash{
   box-shadow: 0 0 20px rgba(0, 0, 0, .6);
 }
+
+/* settingwindow decorations ------------------------------------- */
+.settings{
+  position:absolute;
+  display:none;
+  z-index:99;
+  background-color:#dff;
+  border:3px solid #00f;
+  padding:2vh 4vw;
+  font-size:1.8vw;
+}
+.popuptitle{
+  font-size:2.2vw;
+  color:#fff;
+  background-color:#46f;
+  padding:2vh 2vw;
+  margin-bottom:2vh;
+}
+
+/* radio switch icon ----------------------------------------- */
+input {
+  display:none;
+}
+.radiolabel{
+  display:inline-block;
+  width:5vw;
+  font-size:4vw;
+  vertical-align:middle;
+  opacity:0.5;
+}
+.player1icon{
+  color:#fcc;
+}
+.player2icon{
+  color:#ccf;
+}
+.switch:checked + label {
+  opacity:1;
+}

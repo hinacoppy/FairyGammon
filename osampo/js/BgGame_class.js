@@ -17,6 +17,7 @@ class BgGame {
     this.board = new BgBoard("bgBoardApp", this.gametype);
     this.undoStack = [];
     this.animDelay = 800;
+    this.settingVars = {}; //設定内容を保持するオブジェクト
 
     this.setDomNames();
     this.setEventHandler();
@@ -64,8 +65,9 @@ class BgGame {
     this.undobtn.    on(clickEventType, (e) => { e.preventDefault(); this.undoAction(); });
     this.openrollbtn.on(clickEventType, (e) => { e.preventDefault(); this.rollAction(true); });
     this.nextgamebtn.on(clickEventType, (e) => { e.preventDefault(); this.nextGameAction(); });
-    this.settingbtn. on(clickEventType, (e) => { e.preventDefault(); this.toggleSettingPanelAction(); });
+    this.settingbtn. on(clickEventType, (e) => { e.preventDefault(); this.showSettingPanelAction(); });
     this.resignbtn.  on(clickEventType, (e) => { e.preventDefault(); this.resignAction(); });
+    this.cancelbtn.  on(clickEventType, (e) => { e.preventDefault(); this.cancelSettingPanelAction(); });
     this.newgamebtn. on(clickEventType, (e) => { e.preventDefault(); this.newGameAction(); });
     this.point.      on('touchstart mousedown', (e) => { e.preventDefault(); this.pointTouchStartAction(e); });
     $(window).       on('resize',       (e) => { e.preventDefault(); this.redrawAction(); }); 
@@ -136,6 +138,7 @@ class BgGame {
 
   resignAction() {
     this.settings.slideUp("normal");
+    this.settingbtn.prop("disabled", false);
     this.swapTurn();
     this.bearoffAllAction();
   }
@@ -145,16 +148,24 @@ class BgGame {
     this.showGameEndPanel(this.player);
   }
 
-  toggleSettingPanelAction() {
-    this.settings.slideToggle("normal");
+  showSettingPanelAction() {
+    this.showElement(this.settings, true, true);
+    this.settings.slideDown("normal");
+    this.saveSettingVars();
+    this.settingbtn.prop("disabled", true);
+    this.allactionbtn.prop("disabled", true);
   }
 
   cancelSettingPanelAction() {
     this.settings.slideUp("normal"); //画面を消す
+    this.loadSettingVars();
+    this.settingbtn.prop("disabled", false);
   }
 
   newGameAction() {
     this.settings.slideUp("normal"); //画面を消す
+    this.settingbtn.prop("disabled", false);
+    this.setChequerIcon();
     this.beginNewGame();
   }
 
@@ -237,6 +248,13 @@ class BgGame {
 
   swapXgTurn() {
     this.xgid.turn = -1 * this.xgid.turn;
+  }
+
+  setChequerIcon() {
+    const player1icon  = $("[name=player1icon]:checked").val();
+    const player2icon  = $("[name=player2icon]:checked").val();
+    $(".player1chequer").addClass(player1icon);
+    $(".player2chequer").addClass(player2icon);
   }
 
   setChequerDraggable() {
@@ -419,6 +437,22 @@ class BgGame {
         chkerdom[0].dispatchEvent(delegateEvent);
       }
     }
+  }
+
+  saveSettingVars() {
+    this.settingVars.player1icon = $("[name=player1icon]:checked").val();
+    this.settingVars.player2icon = $("[name=player2icon]:checked").val();
+    this.settingVars.rollbtnprop = this.rollbtn.prop("disabled");
+    this.settingVars.donebtnprop = this.donebtn.prop("disabled");
+    this.settingVars.undobtnprop = this.undobtn.prop("disabled");
+  }
+
+  loadSettingVars() {
+    $("[name=player1icon]").val([this.settingVars.player1icon]);
+    $("[name=player2icon]").val([this.settingVars.player2icon]);
+    this.rollbtn.prop("disabled", this.settingVars.rollbtnprop);
+    this.donebtn.prop("disabled", this.settingVars.donebtnprop);
+    this.undobtn.prop("disabled", this.settingVars.undobtnprop);
   }
 
   redrawAction() {
