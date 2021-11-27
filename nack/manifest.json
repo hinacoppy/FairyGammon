@@ -1,7 +1,7 @@
 {
   "name": "NackGammon",
   "short_name": "NackGammonApp",
-  "start_url": "/FairyGammon/normal/index.html",
+  "start_url": "/FairyGammon/nack/index.html",
   "scope": "/FairyGammon/nack/",
   "display": "fullscreen",
   "background_color": "#fff",
